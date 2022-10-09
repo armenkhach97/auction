@@ -3,13 +3,12 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTable } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
-import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export default () => {
   const location = useLocation();
@@ -32,7 +31,6 @@ export default () => {
           <span>
             {icon ? <span className="sidebar-icon"><FontAwesomeIcon icon={icon} /> </span> : null}
             {image ? <Image src={image} width={20} height={20} className="sidebar-icon svg-icon" /> : null}
-
             <span className="sidebar-text">{title}</span>
           </span>
           {badgeText ? (
@@ -56,23 +54,8 @@ export default () => {
       <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
         <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
           <div className="sidebar-inner px-4 pt-3">
-            <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
-              <div className="d-flex align-items-center">
-                <div className="user-avatar lg-avatar me-4">
-                  <Image src={ProfilePicture} className="card-img-top rounded-circle border-white" />
-                </div>
-                <div className="d-block">
-                  <h6>Hi, Jane</h6>
-                  <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark">
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
-                  </Button>
-                </div>
-              </div>
-              <Nav.Link className="collapse-close d-md-none" onClick={onCollapse}>
-                <FontAwesomeIcon icon={faTimes} />
-              </Nav.Link>
-            </div>
             <Nav className="flex-column pt-3 pt-md-0">
+              <NavItem title="Auction Slidebar" link='' image={ReactHero} />
               <NavItem title="Auctions" link={Routes.DashboardOverview.path} icon={faTable} />
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>

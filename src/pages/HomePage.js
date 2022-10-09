@@ -3,15 +3,15 @@ import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { Routes } from "../routes";
 
 import DashboardOverview from "./dashboard/DashboardOverview";
-import Signin from "./examples/Signin";
-import Signup from "./examples/Signup";
-import NotFoundPage from "./examples/NotFound";
+import Signin from "./sections/Signin";
+import Signup from "./sections/Signup";
+import NotFoundPage from "./sections/NotFound";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
-import AddAuction from "./examples/AddAuction";
-import ShowAuction from "./examples/ShowAuction";
+import AddAuction from "./sections/AddAuction";
+import ShowAuction from "./sections/ShowAuction";
 import { useAuth } from "../contexts/AuthContext";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -20,6 +20,7 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
     useEffect(() => {
         const timer = setTimeout(() => setLoaded(true), 1000);
         return () => clearTimeout(timer);
+        // eslint-disable-next-line
     }, []);
 
     return (<Route {...rest}
@@ -34,11 +35,12 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     useEffect(() => {
 
         if(!currentUser){
-
+            history.push('/sign-in');
         }
 
         const timer = setTimeout(() => setLoaded(true), 1000);
         return () => clearTimeout(timer);
+        // eslint-disable-next-line
     }, []);
 
     const localStorageIsSettingsVisible = () => {

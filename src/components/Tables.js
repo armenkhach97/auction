@@ -1,28 +1,32 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faArrowDown, faArrowUp, faPlus,
+    faPlus, faTrash, faEye,
 } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Card, Button, Table } from '@themesberg/react-bootstrap';
 import { useHistory } from "react-router-dom";
+import moment from "moment-timezone";
 
-export const PageVisitsTable = ({ data = [] }) => {
+export const PageVisitsTable = ({ removeAuction, data = [] }) => {
     const history = useHistory()
     const addNewAuction = () => {
         history.push("/add");
     }
+    const showAuction = (id) => {
+        history.push(`/show/${id}`);
+    }
     const TableRow = (props) => {
-        const { pageName, views, returnValue, bounceRate } = props;
-        const bounceIcon = bounceRate < 0 ? faArrowDown : faArrowUp;
-        const bounceTxtColor = bounceRate < 0 ? "text-danger" : "text-success";
-
+        const { id, name, username, bid, description, end_date } = props;
         return (<tr>
-                <th scope="row">{pageName}</th>
-                <td>{views}</td>
-                <td>${returnValue}</td>
+                <th scope="row">{id}</th>
+                <th scope="row">{name}</th>
+                <th scope="row">{username}</th>
+                <th scope="row">{bid}</th>
+                <th scope="row">{description}</th>
+                <th scope="row">{moment(end_date.toDate()).format("MM/DD/YYYY")}</th>
                 <td>
-                    <FontAwesomeIcon icon={bounceIcon} className={`${bounceTxtColor} me-3`} />
-                    {Math.abs(bounceRate)}%
+                    <Button variant="light" className="m-1" size="sm" onClick={()=>showAuction(id)}><FontAwesomeIcon icon={faEye} className="me-2" /></Button>
+                    <Button variant="light" className="m-1" size="sm" onClick={()=>removeAuction(id)}><FontAwesomeIcon icon={faTrash} className="me-2" /></Button>
                 </td>
             </tr>);
     };
@@ -53,7 +57,7 @@ export const PageVisitsTable = ({ data = [] }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.map(pv => <TableRow key={`page-visit-${pv.id}`} {...pv} />)}
+                {data.map((pv) => <TableRow key={`page-visit-${pv.id}`} {...pv} />)}
                 </tbody>
             </Table>
         </Card>);
